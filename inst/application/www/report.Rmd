@@ -1,0 +1,115 @@
+---
+title: "COVID Risk Assessment Report"
+output: pdf_document
+author: "COVID Fire Modeling Team"
+geometry: margin=1cm
+params:
+  personnel: NA
+  dispersal: NA
+  duration: NA
+  screening: NA
+  socialdist: NA
+  masks: NA
+  localpop: NA
+  localcov: NA
+  icu: NA
+  additional_risk: NA
+  personnel_r: NA
+  dispersal_r: NA
+  duration_r: NA
+  screening_r: NA
+  socialdist_r: NA
+  masks_r: NA
+  localpop_r: NA
+  localcov_r: NA
+  icu_r: NA
+  additional_risk_r: NA
+---
+
+```{r, echo=FALSE}
+library(tibble)
+library(stringr)
+library(ggplot2)
+library(knitr)
+```
+
+*Draft: 10/28/2020*
+
+This report was generated on `r format(Sys.time(), "%m/%d/%Y")`
+
+```{r echo=FALSE, fig.align='center', out.width='50%'}
+tempPlot <- ggrose(params$personnel, params$dispersal, params$duration,
+                params$screening, params$socialdist, params$masks,
+                params$localpop, params$localcov, params$icu,
+                params$additional_risk, chart_num = 4)
+
+tempRose <- file.path(tempdir(), "temp_plot.png")
+# file.copy("www/temp_rose.png", tempRose, overwrite = TRUE)
+
+ggsave(tempRose, plot = tempPlot, height=7, width=7)
+include_graphics(tempRose)
+```
+
+
+```{r echo=FALSE, results='asis', fig.align='left'}
+
+selections <- show_selection(params$personnel, params$dispersal, params$duration,
+                             params$screening, params$socialdist, params$masks,
+                             params$localpop, params$localcov, params$icu,
+                             params$additional_risk)
+
+switch_additional <- function(x) {
+  out <- switch(str_to_lower(x),
+                "none"=0,
+                "low"=1,
+                "moderate"=2,
+                "high"=3)
+  return(out)
+}
+additional_risk <- switch_additional(params$additional_risk)
+
+score <- list(params$personnel, params$dispersal, params$duration,
+                             params$screening, params$socialdist, params$masks,
+                             params$localpop, params$localcov, params$icu) %>%
+  map(function(x){
+    switch(x,
+           low=1,
+           mod=2,
+           high=3)
+  })
+score <- append(score, additional_risk)
+
+
+inputs_table <- tibble(
+  "Risk Ractor"=list("Camp Risk", "", "", "Mitigation Risk", "", "", "COVID Risk", "", "", "Additional Risk"),
+  "Sub-Factor"=list("Personnel", "Dispersal", "Duration",
+                     "Screening", "Social Distancing", "Wearing Masks",
+                     "Firefighter Cases", "Local COVID cases", "Healthcare Capacity",
+                     "Additional Risk"),
+  "Selection"=selections,
+  "Score"=score
+  # "Rationale"=list(params$personnel_r, params$dispersal_r, params$duration_r,
+  #                  params$screening_r, params$socialdist_r, params$masks_r,
+  #                  params$localpop_r, params$localcov_r, params$icu_r,
+  #                  params$additional_risk_r)
+)
+
+kable(inputs_table, caption = "Sub-Factor Selections and Scores")
+
+```
+\pagebreak
+
+```{r echo=FALSE, results='asis', fig.align='left'}
+rationales_table <- tibble(
+  "Sub-Factor"=list("Personnel", "Dispersal", "Duration",
+                     "Screening", "Social Distancing", "Wearing Masks",
+                     "Firefighter Cases", "Local COVID cases", "Healthcare Capacity",
+                     "Additional Risk"),
+  "Rationale"=list(params$personnel_r, params$dispersal_r, params$duration_r,
+                   params$screening_r, params$socialdist_r, params$masks_r,
+                   params$localpop_r, params$localcov_r, params$icu_r,
+                   params$additional_risk_r)
+  )
+
+kable(rationales_table, caption = "Sub-Factor Selections and Rationales")
+```

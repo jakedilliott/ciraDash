@@ -2,7 +2,7 @@
 % Please edit documentation in R/launch_application.R
 \name{launch_application}
 \alias{launch_application}
-\title{Launch Application}
+\title{Launches the CIRA Dashboard as a shiny app}
 \usage{
 launch_application(...)
 }

@@ -1,4 +1,9 @@
-draft_message <- p(strong("DRAFT 10/28/20: This tool is intended to support line officer and incident
+library(shiny)
+library(shinydashboard)
+library(shinyBS)
+library(shinyWidgets)
+
+draft_message <- p(strong("DRAFT 12/10/20: This tool is intended to support line officer and incident
                  manager assessment of COVID-19 risk at the incident level. Updated versions
                  may be provided as both the wildland fire season and our knowledge about COVID
                  changes."))
@@ -34,8 +39,7 @@ local.pop <- list("Select One"=0,
 sidebar <- dashboardSidebar(
   sidebarMenu(
     menuItem("Home", tabName = "home", icon = icon("home")),
-    menuItem("Risk Assessment Tool", tabName = "rose_plot", icon = icon("dashboard")),
-    menuItem("SEIR Epidemic Model", tabName = "epi_model", icon = icon("area-chart"))
+    menuItem("Risk Assessment Tool", tabName = "rose_plot", icon = icon("dashboard"))
   )
 )
 
@@ -74,7 +78,7 @@ body <- dashboardBody(
       ),
       fluidRow(
         column(
-          width = 5, offset = 1,
+          width = 10, offset = 1,
 
           box(
             title = "Risk Assessment Tool", width = NULL, status = "primary", solidHeader = TRUE,
@@ -113,27 +117,6 @@ body <- dashboardBody(
                            style = "simple",
                            label = "COVID-19 Incident Risk Assessment Worksheet",
                            size = "sm"))
-        ),
-        column(width = 5,
-               box(
-                 title = "SEIR Epidemic Model", width = NULL, status = "primary", solidHeader = TRUE,
-                 p("The SEIR Model page is a tool for analyzing the predicted spread of COVID-19 through a wildfire incident
-             camp by allowing users to change variables within the model and use historical wildfire data. The model
-             used for this tool is deterministic, where individuals are in one of 4 classes: Susceptible, Exposed,
-             Infected, or Removed. Individuals move from one class to the next in that order, unless an individual
-             is entering as Exposed. For more information on the model used for this page you can read the paper here: ",
-                   a(href="https://www.mdpi.com/2571-6255/3/3/38/htm", "Potential COVID-19 Outbreak in Fire Camp: Modeling Scenarios and Interventions"),
-                   "Please be patient on this page as calculations running in the background may
-             take some time to render on the webpage." ),
-                 tags$ul(
-                   tags$li("Choose from 3 fires: Highline, Lolo Peak, or Tank Hollow"),
-                   tags$li("Check out some of the preselected scenarios."),
-                   tags$li("Modify the Infection Rate and Entry Infected Rate to see how they affect disease
-                      dynamics within the 3 fires."),
-                 ),
-                 p("A short video walking through the SEIR Model page."),
-                 tags$iframe(height="360", width="100%", src="https://echo360.org/media/be3e7a1f-7e8e-4b7d-9771-0dcfdb159376/public?autoplay=false&automute=true", frameborder=0)
-               )
         )
       ),
       fluidRow(
@@ -337,165 +320,13 @@ body <- dashboardBody(
                 box(width = NULL, status = "success", plotOutput("relative", height = "500px"))
               )
             ),
-
-            fluidRow(
-              column(
-                width = rose_widths$inputs + rose_widths$graphs,
-                offset = rose_widths$offset,
-                box(title = "Info and Feedback", status = "primary", solidHeader = TRUE, width = NULL,
-                    # box(title = "", status = "warning",width = 12,
-                    p('Entering the following information is optional, not intended for official
-          record keeping or documentation, and is for informational use only. Clicking
-          the “Submit” button will still record the inputs above even if the "Info and
-          Feedback" section below is left blank.'),
-
-                    column(width = 4,
-                           textAreaInput(inputId = "feedback",
-                                         label = "Feedback or comments",
-                                         resize = "none"),
-                           textInput(inputId = "name",
-                                     label = "Name"),
-                           pickerInput(inputId = "role",
-                                       label = "Role",
-                                       choices = c("Select One"=" ", "AA", "IC", "FMO/AFMO", "MEDL", "Risk SME",
-                                                   "SME/RMA", "Other")),
-                           textInput(inputId = "role_other",
-                                     label = "If you selected \"Other\" for Role:")),
-                    column(width = 4,
-                           dateInput(inputId = "inc_date",
-                                     label = "Date of Incident",
-                                     value = "2020-01-01"),
-                           textInput(inputId = "inc_number",
-                                     label = paste("Incident Number (ICS-209: XX-XXX-XXXXXX)"),
-                                     placeholder = "12-345-678900"),
-                           textInput(inputId = "inc_comments",
-                                     label = "Comments on current conditions"),
-
-                           p(strong("Click once and wait for a confirmation message.")),
-                           actionBttn(inputId = "submit",
-                                      label = "Submit(optional)",
-                                      style = "simple",
-                                      color = "success",
-                                      size = "sm",
-                                      icon = icon("share"))),
-                    column(width = 4,
-                           pickerInput(inputId = "gacc",
-                                       label = "GACC",
-                                       choices = c("Select One"=" ", "Alaska", "Eastern Area", "Great Basin", "Northern California",
-                                                   "Northern Rockies","Rocky Mountain", "Southern Area", "Southern California", "Southwest")),
-                           pickerInput(inputId = "imt_type",
-                                       label = "IMT Type",
-                                       choices = c("Select One"=" ", "Type 1", "Type 2", "Type 3", "NIMO", "Other")),
-                           textInput(inputId = "imt_type_other",
-                                     label = "If you selected \"Other\" for IMT Type:"),
-                    )
-                )
-              )
-            ),
             HTML("<center>
                    <img src='csu_stacked.png' height=130>
                    <img src='usda.png' height=86>
                    <img src='usfs.png' height=92 style='margin-left:10px'>
                    <img src='fire_science.jpg' height=104>
                  </center>")
-    ), # /tabItem: rose_plot
-
-    # Epi Model Tab -----------------------------------------------------------
-    tabItem(
-      tabName = "epi_model",
-      fluidRow(
-        column(
-          width = 10, offset =1,
-          box(
-            width = NULL,
-            h2("COVID-19 Incident Risk Assessment Tool", img(src="team_logo_v1.png", height=170, style = "margin-top:-30px"), align = "center"),
-
-            draft_message
-          )
-        )
-      ),
-
-      column(
-        width = 5,
-        box(
-          width = NULL, status = "primary", title = "Inputs", solidHeader = TRUE,
-          p("The graphs on this page are created using a peer reviewed epidemiological
-            model of COVID-19 adapted to the context of a wildfire incident. For more
-            information on the model used for this page you can read the paper here: ",
-            a(href="https://www.mdpi.com/2571-6255/3/3/38/htm", "Potential COVID-19 Outbreak in Fire Camp: Modeling Scenarios and Interventions."),
-            ". Below are
-            3 historical wild fires with varying populations of firefighting personnel,
-            and 2 variables affecting the spread of COVID-19. When a change is made to
-            the variable inputs the graphs on this page will update automatically. To
-            allow for easier interpretation, tabs above each graph change the appearance
-            of data on the graph. You can choose to view All Classes or Infected Classes
-            for the bar graph, and the line graph can be displayed with a log or non-log
-            y scale."),
-
-
-
-          prettyRadioButtons(inputId = "SEIR_fire",
-                             label = "Choose a Fire",
-                             choiceNames = c("Highline (AZ-TNF-000780)", "Lolo Peak (MT-LNF-001288)", "Tank Hollow (UT-UWF-000791"),
-                             choiceValues = c("highline", "lolo_peak", "tank_hollow")),
-          prettyRadioButtons(inputId = "scenarios",
-                             label = uiOutput("tt_examples"),
-                             choiceNames = c("Best Case(IR = 1.34, EIR = .1%)",
-                                             "Worst Case(IR = 5.36, EIR = 5%)",
-                                             "Baseline(IR = 2.68, EIR = 1%)",
-                                             "Enhanced Screening(IR = 2.86, EIR = 0.1%)",
-                                             "Aggressive Social Distancing(IR = 1.34, EIR = 0.1%)"),
-                             choiceValues = c("a", "b", "c", "d", "e"),
-                             selected = "c"),
-          sliderInput(inputId = "R0",
-                      label = uiOutput("tt_R0"),
-                      min = 1.34,
-                      max = 5.36,
-                      value = 2.68,
-                      ticks = TRUE),
-          sliderInput(inputId = "eir",
-                      label = uiOutput("tt_eir"),
-                      min = 0.001,
-                      max = 0.05,
-                      value = 0.01,
-                      ticks = TRUE)
-        )
-      ),
-
-      column(
-        width = 7,
-        tabBox(
-          width = NULL, id = "SEIR_charts",
-          tabPanel(
-            title = "All Personel Classes",
-            plotOutput("SEIR_bar_all")
-          ),
-          tabPanel(
-            title = "Infected Classes",
-            plotOutput("SEIR_bar_inf")
-          )
-        ),
-        tabBox(
-          width = NULL, id = "SEIR_lines",
-          tabPanel(
-            title = "Non-Log Scale",
-            plotOutput("SEIR_line_nonlog")
-          ),
-          tabPanel(
-            title = "Log Scale",
-            plotOutput("SEIR_line_log")
-          )
-        )
-      ),
-
-
-      HTML("<center>
-                   <img src='csu_stacked.png' height=130>
-                   <img src='usda.png' height=86>
-                   <img src='usfs.png' height=92 style='margin-left:10px'>
-                   <img src='fire_science.jpg' height=104>
-                 </center>")
-    ) # /tabItem: epi_model
+    ) # /tabItem: rose_plot
   ) # /tabItems
 ) # /dashboardbody
 

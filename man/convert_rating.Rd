@@ -2,17 +2,10 @@
 % Please edit documentation in R/rose_plot.R
 \name{convert_rating}
 \alias{convert_rating}
-\title{Converts ratings to numeric or vice versa}
+\title{Converts ratings to numeric values, or numeric values to ratings}
 \usage{
 convert_rating(input)
 }
-\arguments{
-\item{input}{A character vector or numeric input}
-}
-\value{
-The character input \code{'low'} as the numeric output \code{1}
-The numeric input \code{1} as the character output \code{'Low'}
-}
 \description{
-Converts ratings to numeric or vice versa
+Converts ratings to numeric values, or numeric values to ratings
 }

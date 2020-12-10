@@ -18,30 +18,10 @@ ggrose(
   chart_num
 )
 }
-\arguments{
-\item{personnel}{A character string ('low', 'mod', or 'high')}
-
-\item{dispersal}{same as above}
-
-\item{duration}{same as above}
-
-\item{screening}{same as above}
-
-\item{socialdist}{same as above}
-
-\item{masks}{same as above}
-
-\item{localpop}{same as above}
-
-\item{localcov}{same as above}
-
-\item{icu}{same as above}
-
-\item{additional_risk}{A character string ('none', 'moderate', 'high')}
-
-\item{chart_num}{1:Camp Risk; 2:Migigation Risk; 3:COVID Risk; 4:Final Assessment}
+\value{
+A ggplot object
 }
 \description{
-Takes inputs from the rose chart ui page and returns a graphical
-representation of those inputs. The output is a ggplot object.
+A graphical wrapper function that takes inputs from the Rose Chart
+UI page and resturns a graphical output of thos inputs.
 }

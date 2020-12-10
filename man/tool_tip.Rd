@@ -6,11 +6,9 @@
 \usage{
 tool_tip(variable, text)
 }
-\arguments{
-\item{variable}{The name/title of the tooltip}
-
-\item{text}{The hover over text that appears over the title}
-}
 \description{
-This function gets used in the server.R to create tooltips for the different rose chart inputs
+Creates a tooltip
+}
+\examples{
+tool_tip("Duration", "A length of time.")
 }

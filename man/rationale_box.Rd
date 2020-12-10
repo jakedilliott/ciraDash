@@ -6,12 +6,9 @@
 \usage{
 rationale_box(name)
 }
-\arguments{
-\item{name}{Name of a rose chart input}
-}
 \description{
-This function gets used in ui.R to create text input boxes for rationales
+Creates a text box for rationales
 }
 \examples{
-rationale_box("duration")
+rationale_box("Duration")
 }

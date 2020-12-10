@@ -2,7 +2,8 @@
 % Please edit documentation in R/rose_plot.R
 \name{clean_rose_inputs}
 \alias{clean_rose_inputs}
-\title{Clean Rose Inputs}
+\title{Takes in rose chart inputs from the UI and outputs a
+tibble to be used in the ggrose function}
 \usage{
 clean_rose_inputs(
   personnel,
@@ -15,25 +16,6 @@ clean_rose_inputs(
   localcov,
   icu
 )
-}
-\arguments{
-\item{personnel}{A character string ('low', 'mod', or 'high')}
-
-\item{dispersal}{A character string ('low', 'mod', or 'high')}
-
-\item{duration}{A character string ('low', 'mod', or 'high')}
-
-\item{screening}{A character string ('low', 'mod', or 'high')}
-
-\item{socialdist}{A character string ('low', 'mod', or 'high')}
-
-\item{masks}{A character string ('low', 'mod', or 'high')}
-
-\item{localpop}{A character string ('low', 'mod', or 'high')}
-
-\item{localcov}{A character string ('low', 'mod', or 'high')}
-
-\item{icu}{A character string ('low', 'mod', or 'high')}
 }
 \description{
 Takes in rose chart inputs from the UI and outputs a

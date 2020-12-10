@@ -1,13 +1,8 @@
 #' Creates a tooltip
 #'
-#' This function gets used in the server.R to create tooltips for the different rose chart inputs
-#'
-#' @param variable The name/title of the tooltip
-#' @param text The hover over text that appears over the title
 #' @export
-#' @example
-#' tool_tip("Duration", "The amount of time that the camp is active")
-#'
+#' @examples
+#' tool_tip("Duration", "A length of time.")
 tool_tip <- function(variable, text){
   shiny::renderUI({
     shinyBS::tipify(a(variable), text, placement = "top", trigger = "hover")
@@ -16,35 +11,17 @@ tool_tip <- function(variable, text){
 
 #' Creates a text box for rationales
 #'
-#' This function gets used in ui.R to create text input boxes for rationales
-#'
-#' @param name Name of a rose chart input
 #' @export
 #' @examples
-#' rationale_box("duration")
+#' rationale_box("Duration")
 rationale_box <- function(name) {
   shiny::textAreaInput(inputId = paste0(name, "_r"),
                        label = "Rationale",
                        resize = "none")
 }
 
-#' Clean Rose Inputs
-#'
 #' Takes in rose chart inputs from the UI and outputs a
 #' tibble to be used in the ggrose function
-#'
-#' @param personnel A character string ('low', 'mod', or 'high')
-#' @param dispersal A character string ('low', 'mod', or 'high')
-#' @param duration A character string ('low', 'mod', or 'high')
-#' @param screening A character string ('low', 'mod', or 'high')
-#' @param socialdist A character string ('low', 'mod', or 'high')
-#' @param masks A character string ('low', 'mod', or 'high')
-#' @param localpop A character string ('low', 'mod', or 'high')
-#' @param localcov A character string ('low', 'mod', or 'high')
-#' @param icu A character string ('low', 'mod', or 'high')
-#'
-#' @example
-#' clean_rose_inputs()
 clean_rose_inputs <- function(personnel, dispersal, duration,
                               screening, socialdist, masks,
                               localpop, localcov, icu) {
@@ -67,25 +44,19 @@ clean_rose_inputs <- function(personnel, dispersal, duration,
                              return(out)
                            })
   out <- dplyr::tibble(x = rose_labels, y = y_list, rating = rating_list)
-  return(out)
+
+  out
 }
 
 
-#' Converts ratings to numeric or vice versa
-#'
-#' @param input A character vector or numeric input
-#' @return The character input \code{'low'} as the numeric output \code{1}
-#' The numeric input \code{1} as the character output \code{'Low'}
-#'
-#' @example
-#' convert_rating(1)
+#' Converts ratings to numeric values, or numeric values to ratings
 convert_rating <- function(input) {
   if(is.character(input)) {
     output <- switch(stringr::str_to_lower(input),
-                  none = 0,
-                  low  = 1,
-                  moderate = 2,
-                  high = 3)
+                     none = 0,
+                     low  = 1,
+                     moderate = 2,
+                     high = 3)
   } else if(is.numeric(input)) {
     output <- dplyr::case_when(
       input == 1 ~ "Low",
@@ -95,32 +66,18 @@ convert_rating <- function(input) {
     stop(paste0("invalid 'type' (", class(input), ") of argument"))
   }
 
-  return(output)
+  output
 }
 
 #' GGRose
 #'
-#' Takes inputs from the rose chart ui page and returns a graphical
-#' representation of those inputs. The output is a ggplot object.
+#' A graphical wrapper function that takes inputs from the Rose Chart
+#' UI page and resturns a graphical output of thos inputs.
 #'
-#' @param personnel A character string ('low', 'mod', or 'high')
-#' @param dispersal same as above
-#' @param duration same as above
-#' @param screening same as above
-#' @param socialdist same as above
-#' @param masks same as above
-#' @param localpop same as above
-#' @param localcov same as above
-#' @param icu same as above
-#' @param additional_risk A character string ('none', 'moderate', 'high')
-#' @param chart_num 1:Camp Risk; 2:Migigation Risk; 3:COVID Risk; 4:Final Assessment
+#' @return
+#' A ggplot object
 #'
 #' @export
-#' @example
-#' ggrose(personnel, dispersal, duration,
-#'        screening, socialdist, masks,
-#'        localpop, localcov, icu,
-#'        additional_risk, chart_num)
 ggrose <- function(personnel, dispersal, duration,
                    screening, socialdist, masks,
                    localpop, localcov, icu,
@@ -213,12 +170,5 @@ ggrose <- function(personnel, dispersal, duration,
     ggplot2::guides(fill = "none") +
     ggplot2::scale_alpha_continuous(range = c(0,1), guide = "none")
 
-  return(p)
+  p
 }
-
-## Unit test
-# ggrose(personnel = "low", dispersal = "high", duration = "mod",
-#        screening = "low", socialdist = "high", masks = "low",
-#        localpop = "mod", localcov = "high", icu = "high",
-#        additional_risk = "Moderate", chart_num = 4)
-

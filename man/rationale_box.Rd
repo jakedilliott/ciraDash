@@ -9,6 +9,3 @@ rationale_box(name)
 \description{
 Creates a text box for rationales
 }
-\examples{
-rationale_box("Duration")
-}

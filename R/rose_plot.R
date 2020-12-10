@@ -1,8 +1,6 @@
 #' Creates a tooltip
 #'
 #' @export
-#' @examples
-#' tool_tip("Duration", "A length of time.")
 tool_tip <- function(variable, text){
   shiny::renderUI({
     shinyBS::tipify(a(variable), text, placement = "top", trigger = "hover")
@@ -12,8 +10,6 @@ tool_tip <- function(variable, text){
 #' Creates a text box for rationales
 #'
 #' @export
-#' @examples
-#' rationale_box("Duration")
 rationale_box <- function(name) {
   shiny::textAreaInput(inputId = paste0(name, "_r"),
                        label = "Rationale",

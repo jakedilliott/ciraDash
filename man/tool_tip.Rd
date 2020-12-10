@@ -9,6 +9,3 @@ tool_tip(variable, text)
 \description{
 Creates a tooltip
 }
-\examples{
-tool_tip("Duration", "A length of time.")
-}

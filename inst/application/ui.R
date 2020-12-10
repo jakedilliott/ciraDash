@@ -37,6 +37,7 @@ local.pop <- list("Select One"=0,
 
 # Dashboard Sidebar -------------------------------------------------------
 sidebar <- dashboardSidebar(
+  width = 200,
   sidebarMenu(
     menuItem("Home", tabName = "home", icon = icon("home")),
     menuItem("Risk Assessment Tool", tabName = "rose_plot", icon = icon("dashboard"))
@@ -157,29 +158,21 @@ body <- dashboardBody(
                     in order to meet the needs of the fire, and control over camp
                     dispersal should be used to mitigate COVID related risk."),
 
-                    fluidRow(
-                      column(width=6,
-                             pickerInput(inputId = "personnel",
-                                         uiOutput("tt_personnel"),
-                                         choices = pers.pop,
-                                         choicesOpt = list(subtext = label_subtext)),
-                             pickerInput(inputId = "dispersal",
-                                         uiOutput("tt_dispersal"),
-                                         choices = list("Select One"=0,
-                                                        "High Dispersal" = "low",
-                                                        "Moderate Dispersal" = "mod",
-                                                        "Low Dispersal" = "high"),
-                                         choicesOpt = list(subtext = label_subtext)),
-                             pickerInput(inputId = "duration",
-                                         uiOutput("tt_duration"),
-                                         choices = dur.list,
-                                         choicesOpt = list(subtext = label_subtext))
-                      ),
-                      column(width=6,
-                             rationale_box(name = "personnel"),
-                             rationale_box(name = "dispersal"),
-                             rationale_box(name = "duration"))
-                    )
+                    pickerInput(inputId = "personnel",
+                                uiOutput("tt_personnel"),
+                                choices = pers.pop,
+                                choicesOpt = list(subtext = label_subtext)),
+                    pickerInput(inputId = "dispersal",
+                                uiOutput("tt_dispersal"),
+                                choices = list("Select One"=0,
+                                               "High Dispersal" = "low",
+                                               "Moderate Dispersal" = "mod",
+                                               "Low Dispersal" = "high"),
+                                choicesOpt = list(subtext = label_subtext)),
+                    pickerInput(inputId = "duration",
+                                uiOutput("tt_duration"),
+                                choices = dur.list,
+                                choicesOpt = list(subtext = label_subtext))
                 )
               ),
               column(
@@ -203,30 +196,22 @@ body <- dashboardBody(
                       a(href="https://sites.google.com/a/firenet.gov/fmb/home/covid19-portal/wildland-fire-covid-19-screening-information",
                         "MPHAT Screening Tool"),
                       ". Fire Leadership has control over all three variables associated with mitigation."),
-                    fluidRow(
-                      column(width = 6,
-                             pickerInput(inputId = "screening",
-                                         uiOutput("tt_screening"),
-                                         choices = freq.list,
-                                         choicesOpt = list(subtext = label_subtext)),
-                             pickerInput(inputId = "socialdist",
-                                         uiOutput("tt_socialdist"),
-                                         choices = list("Select One"=0,
-                                                        "High compliance" = "low",
-                                                        "Moderate compliance" = "mod",
-                                                        "Low compliance" = "high"),
-                                         choicesOpt = list(subtext = label_subtext)),
-                             pickerInput(inputId = "masks",
-                                         uiOutput("tt_masks"),
-                                         choices = freq.list,
-                                         choicesOpt = list(subtext = label_subtext)),
-                      ),
-                      column(width = 6,
-                             rationale_box(name = "screening"),
-                             rationale_box(name = "socialdist"),
-                             rationale_box(name = "masks")
-                      )
-                    )
+
+                    pickerInput(inputId = "screening",
+                                uiOutput("tt_screening"),
+                                choices = freq.list,
+                                choicesOpt = list(subtext = label_subtext)),
+                    pickerInput(inputId = "socialdist",
+                                uiOutput("tt_socialdist"),
+                                choices = list("Select One"=0,
+                                               "High compliance" = "low",
+                                               "Moderate compliance" = "mod",
+                                               "Low compliance" = "high"),
+                                choicesOpt = list(subtext = label_subtext)),
+                    pickerInput(inputId = "masks",
+                                uiOutput("tt_masks"),
+                                choices = freq.list,
+                                choicesOpt = list(subtext = label_subtext))
                 )
               ),
               column(
@@ -251,29 +236,21 @@ body <- dashboardBody(
                       " The number of firefighter cases and their risk to the rest of the camp are affected
                     by Camp Dispersal and Mitigation Risk Factors, while number of local COVID cases and Healthcare
                     Capacity are outside the control of fire leadership."),
-                    fluidRow(
-                      column(width = 6,
-                             pickerInput(inputId = "localpop",
-                                         uiOutput("tt_localpop"),
-                                         choices = local.pop,
-                                         choicesOpt = list(subtext = label_subtext)),
-                             pickerInput(inputId = "localcov",
-                                         uiOutput("tt_localcov"),
-                                         choices = qual.list,
-                                         choicesOpt = list(subtext = label_subtext)),
-                             pickerInput(inputId = "icu",
-                                         uiOutput("tt_icu"),
-                                         choices = list("Select One"=0,
-                                                        "High capacity" = "low",
-                                                        "Moderate capacity" = "mod",
-                                                        "Low capacity" = "high"),
-                                         choicesOpt = list(subtext = label_subtext))
-                      ),
-                      column(width = 6,
-                             rationale_box(name = "localpop"),
-                             rationale_box(name = "localcov"),
-                             rationale_box(name = "icu"))
-                    )
+                    pickerInput(inputId = "localpop",
+                                uiOutput("tt_localpop"),
+                                choices = local.pop,
+                                choicesOpt = list(subtext = label_subtext)),
+                    pickerInput(inputId = "localcov",
+                                uiOutput("tt_localcov"),
+                                choices = qual.list,
+                                choicesOpt = list(subtext = label_subtext)),
+                    pickerInput(inputId = "icu",
+                                uiOutput("tt_icu"),
+                                choices = list("Select One"=0,
+                                               "High capacity" = "low",
+                                               "Moderate capacity" = "mod",
+                                               "Low capacity" = "high"),
+                                choicesOpt = list(subtext = label_subtext))
                 )
               ),
               column(
@@ -292,16 +269,12 @@ body <- dashboardBody(
                            Acting as a proxy for factors not addressed earlier in the model, this is a subjective
                            input and meant to account for additional factors that may be the concern of line
                            officers or incidient managers."),
-                    column(width=6,
-                           sliderTextInput(inputId = "additional_risk",
-                                           uiOutput("tt_additional_risk"),
-                                           choices = c("None", "Low", "Moderate","High"),
-                                           grid = TRUE,
-                                           force_edges = TRUE,
-                           )),
-                    column(width=6,
-                           rationale_box(name = "additional_risk"))),
-
+                    sliderTextInput(inputId = "additional_risk",
+                                    uiOutput("tt_additional_risk"),
+                                    choices = c("None", "Low", "Moderate","High"),
+                                    grid = TRUE,
+                                    force_edges = TRUE)
+                ),
                 box(title = "Final Assessment of Relative Risk", width = NULL, solidHeader = TRUE,
                     status = "primary",
                     p("The resulting risk values from the three COVID-19 risk categories above
@@ -320,6 +293,8 @@ body <- dashboardBody(
                 box(width = NULL, status = "success", plotOutput("relative", height = "500px"))
               )
             ),
+
+
             HTML("<center>
                    <img src='csu_stacked.png' height=130>
                    <img src='usda.png' height=86>
@@ -332,7 +307,7 @@ body <- dashboardBody(
 
 ## This sets up the dashboard
 ui <- dashboardPage(
-  dashboardHeader(title = "COVID Camp Assessment Dashboard", titleWidth = 400),
+  dashboardHeader(title = "CIRA Dashboard", titleWidth = 200),
   sidebar,
   body
 )

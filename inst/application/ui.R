@@ -3,7 +3,7 @@ library(shinydashboard)
 library(shinyBS)
 library(shinyWidgets)
 
-draft_message <- p(strong("DRAFT 12/10/20: This tool is intended to support line officer and incident
+draft_message <- p(strong("DRAFT 4/12/20: This tool is intended to support line officer and incident
                  manager assessment of COVID-19 risk at the incident level. Updated versions
                  may be provided as both the wildland fire season and our knowledge about COVID
                  changes."))

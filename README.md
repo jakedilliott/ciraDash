@@ -13,32 +13,19 @@ COVID changes.
 
 ## Installation
 
-You can install the latest version from [GitHub](https://github.com/)
-with:
+You can install the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
-<<<<<<< HEAD
 # install.packages("devtools") # Install R devtools if you have not already
 devtools::install_github("jakedilliott/cira_dashboard")
-=======
-# install.packages("devtools")
-devtools::install_github("jakedilliott/ciraDash")
->>>>>>> 6bc18cdad724e5aefdc97551917a65fd73ff73f3
 ```
 
 ## Example
 
-<<<<<<< HEAD
 You can run the CIRA dashboard locally with:
 
 ``` r
 library(ciraDash)
-ciraDash::launch_application()
-=======
-To run the shiny app after installing with `devtools::install_github`
-
-``` r
-library(ciraDash) # load the cira package and app
-launch_application() # wrapper function for launching ciraDash
->>>>>>> 6bc18cdad724e5aefdc97551917a65fd73ff73f3
+ciraDash::launch_ciraDash()
 ```

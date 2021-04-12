@@ -38,7 +38,4 @@ You can run the CIRA dashboard locally with:
 ```{r example, eval=FALSE}
 library(ciraDash)
 ciraDash::launch_ciraDash()
-=======
-# install.packages("devtools")
-devtools::install_github("jakedilliott/ciraDash")
 ```

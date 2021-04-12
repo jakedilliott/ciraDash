@@ -4,6 +4,9 @@
 # COVID-19 Incident Risk Assessment Dashboard
 
 <!-- badges: start -->
+
+[![DOI](https://zenodo.org/badge/317966909.svg)](https://zenodo.org/badge/latestdoi/317966909)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2021--04--12-yellowgreen.svg)](/commits/master)
 <!-- badges: end -->
 
 This tool is intended to support line officer and incident manager

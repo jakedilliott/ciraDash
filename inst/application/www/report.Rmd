@@ -27,8 +27,6 @@ params:
 ---
 
 ```{r, echo=FALSE}
-library(tibble)
-library(stringr)
 library(ggplot2)
 library(knitr)
 ```
@@ -69,9 +67,9 @@ switch_additional <- function(x) {
 additional_risk <- switch_additional(params$additional_risk)
 
 score <- list(params$personnel, params$dispersal, params$duration,
-                             params$screening, params$socialdist, params$masks,
-                             params$localpop, params$localcov, params$icu) %>%
-  map(function(x){
+              params$screening, params$socialdist, params$masks,
+              params$localpop, params$localcov, params$icu) %>%
+  purrr::map(function(x){
     switch(x,
            low=1,
            mod=2,
@@ -80,7 +78,7 @@ score <- list(params$personnel, params$dispersal, params$duration,
 score <- append(score, additional_risk)
 
 
-inputs_table <- tibble(
+inputs_table <- dplyr::tibble(
   "Risk Ractor"=list("Camp Risk", "", "", "Mitigation Risk", "", "", "COVID Risk", "", "", "Additional Risk"),
   "Sub-Factor"=list("Personnel", "Dispersal", "Duration",
                      "Screening", "Social Distancing", "Wearing Masks",

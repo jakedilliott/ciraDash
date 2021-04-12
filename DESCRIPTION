@@ -1,6 +1,6 @@
 Package: ciraDash
 Title: COVID-19 Incident Risk Assessment Dashboard
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R:
   c(person(given = "Jake",
            family = "Dilliott",
